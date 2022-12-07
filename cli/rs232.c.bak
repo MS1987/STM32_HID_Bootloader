@@ -219,15 +219,15 @@ int set_speed(int fd, int speed)
         return 1;
     }
 	
-	if (-1 == set_speed(fd, DEF_BAUD)) {
+	if (-1 == set_speed(tty_fd, DEF_BAUD)) {
 		printf("Cannot set baudrate to 115200\n");
-		close(fd);
+		close(tty_fd);
 		exit(1);
 	}
 	
-  	if (-1 == set_parity(fd, 8, 1, 'N')) {
+  	if (-1 == set_parity(tty_fd, 8, 1, 'N')) {
     	printf("Set Parity Error\n");
-		close(fd);
+		close(tty_fd);
     	exit(1);
   	}
 	#if 0

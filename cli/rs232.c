@@ -291,6 +291,9 @@ int set_speed(int fd, int speed)
   
   int RS232_SendNBytes(unsigned char *buf, unsigned int num) {
    int n = write(tty_fd, buf, num);
+   printf("Send %d num:\n");
+   for(int i = 0; i <  num; i++)
+	   printf("0x%x", buf[i]);
    if(n < num) {
      if(errno == EAGAIN) {
        return 0;
