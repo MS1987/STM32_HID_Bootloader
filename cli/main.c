@@ -227,11 +227,32 @@ int main(int argc, char *argv[]) {
     
     printf(" %d Bytes\n", n_bytes);
 
-    do{
+   /* do{
       //hid_read(handle, hid_rx_buf, 9);
 	  RS232_Receive(hid_rx_buf, 9);
       usleep(500);
-    }while(hid_rx_buf[7] != 0x02);
+    }while(hid_rx_buf[7] != 0x02);*/
+	
+	try_ask_time = 0;
+	do{
+		memset(hid_rx_buf, 0, sizeof(hid_rx_buf));
+		//hid_read(handle, hid_rx_buf, 9);
+		int rcv_num = RS232_Receive(hid_rx_buf, 50);
+		if(rcv_num > 0)
+		printf("rcv %d data:%s\n", rcv_num, (char *)&hid_rx_buf[0]);
+		if(hid_rx_buf[7] != 0x02)
+		{
+			usleep(1000000);
+			try_ask_time++;
+			if(try_ask_time > 10)
+			{
+				printf("> Error, no frame ack receive, timeout and exit!!!\n");
+				goto exit;
+			}
+			
+		}
+	 }while(hid_rx_buf[7] != 0x02);
+	
     
     memset(page_data, 0, sizeof(page_data));
     read_bytes = fread(page_data, 1, sizeof(page_data), firmware_file);

@@ -207,8 +207,8 @@ int main(int argc, char *argv[]) {
 
   while(read_bytes > 0) {
 
-    for(int i = 0; i < SECTOR_SIZE; i += HID_TX_SIZE - 1) {
-      memcpy(&hid_tx_buf[0], page_data + i, HID_TX_SIZE - 1);
+    for(int i = 0; i < SECTOR_SIZE; i += HID_TX_SIZE ) {
+      memcpy(&hid_tx_buf[0], page_data + i, HID_TX_SIZE );
 
       if((i % 1024) == 0){
         printf(".");
@@ -221,7 +221,7 @@ int main(int argc, char *argv[]) {
         error = 1;
         goto exit;
       }
-      n_bytes += (HID_TX_SIZE - 1);
+      n_bytes += (HID_TX_SIZE );
       usleep(500);
     }
     
