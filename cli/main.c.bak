@@ -152,7 +152,7 @@ int main(int argc, char *argv[]) {
 
   // Flash is unavailable when writing to it, so USB interrupt may fail here
  // if(!usb_write(handle, hid_tx_buf, HID_TX_SIZE)) {
-	 int tx_num = RS232_SendNBytes(hid_tx_buf, HID_TX_SIZE) < HID_TX_SIZE;
+	 int tx_num = RS232_SendNBytes(hid_tx_buf, HID_TX_SIZE);
   if(tx_num < HID_TX_SIZE) {
     printf("> Error while sending %d <reset pages> command.\n", tx_num);
     error = 1;

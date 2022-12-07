@@ -83,7 +83,7 @@ int main(int argc, char *argv[]) {
   printf  ("+-----------------------------------------------------------------------+\n\n");
   
   if(argc < 3) {
-    printf("Usage: hid-flash <bin_firmware_file> <comport> <delay (optional)>\n");
+    printf("Usage: hid-flash <bin_firmware_file> <comport> <delay (optional)>\nFor example:\n./hid-flash ~/klipper/out/klipper.bin ttyS0\n");
     return 1;
   }else if(argc == 4){
     _timer = atol(argv[3]);
