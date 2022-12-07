@@ -304,7 +304,7 @@ int set_speed(int fd, int speed)
   }
   
   int RS232_Receive(unsigned char *buf, unsigned int num) {
-	int n = read(fd, buf, num);
+	int n = read(tty_fd, buf, num);
 	return n;
 	
   }
