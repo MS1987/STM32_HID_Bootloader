@@ -290,7 +290,7 @@ int set_speed(int fd, int speed)
   }
   
   int RS232_SendNBytes(unsigned char *buf, unsigned int num) {
-   unsigned int n = write(tty_fd, buf, num);
+   int n = write(tty_fd, buf, num);
    printf("Send %d num, actual send %d:\n", num, n);
    for(int i = 0; i <  num; i++)
 	   printf("0x%x ", buf[i]);
@@ -303,7 +303,7 @@ int set_speed(int fd, int speed)
    }
 
 
-   return(0);
+   return(n);
   }
   
   int RS232_Receive(unsigned char *buf, unsigned int num) {
