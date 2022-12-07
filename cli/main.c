@@ -158,11 +158,27 @@ int main(int argc, char *argv[]) {
     error = 1;
     goto exit;
   }
+/*  while(1)
+{
+  memset(hid_rx_buf, 0, sizeof(hid_rx_buf));
+  int rcv_num = RS232_Receive(hid_rx_buf, sizeof(hid_rx_buf));
+  if(rcv_num > 0)
+  {
+        printf("rcv %d data:\n", rcv_num);
+       for(int index = 0; index < rcv_num; index++)
+	printf("0x%x ", hid_rx_buf[index]);
+	printf("\n");
+  }
+
+  usleep(1000);
+}*/
   
   do{
 	  memset(hid_rx_buf, 0, sizeof(hid_rx_buf));
 	  //hid_read(handle, hid_rx_buf, 9);
-	  RS232_Receive(hid_rx_buf, 3);
+	  int rcv_num = RS232_Receive(hid_rx_buf, 50);
+//	if(rcv_num > 0)
+//	  printf("rcv %d data:%s\n", rcv_num, (char *)&hid_rx_buf[0]);
 	  if((hid_rx_buf[0] != 'O') || (hid_rx_buf[1] != 'K'))
 	  {
 			usleep(1000000);
