@@ -251,6 +251,7 @@ int main(int argc, char *argv[]) {
     printf("> Error while sending <reboot mcu> command.\n");
   }
   
+  
 exit:
   /*if(handle) {
     hid_close(handle);
