@@ -30,7 +30,7 @@
 #include "hidapi.h"
 
 #define SECTOR_SIZE  1024
-#define HID_TX_SIZE    65
+#define HID_TX_SIZE    64
 #define HID_RX_SIZE     100
 
 #define VID           0x1209
