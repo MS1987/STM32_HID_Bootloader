@@ -63,7 +63,7 @@ int main(int argc, char *argv[]) {
   uint8_t page_data[SECTOR_SIZE];
   uint8_t hid_tx_buf[HID_TX_SIZE];
   uint8_t hid_rx_buf[HID_RX_SIZE];
-  uint8_t CMD_RESET_PAGES[8] = {'B','T','L','D','C','M','D', 0x00};
+  uint8_t CMD_RESET_PAGES[8] = {'B','L','T','T','T','T','T', 'T'};
   uint8_t CMD_REBOOT_MCU[8] = {'B','T','L','D','C','M','D', 0x01};
   hid_device *handle = NULL;
   size_t read_bytes;
@@ -177,13 +177,13 @@ int main(int argc, char *argv[]) {
 	  memset(hid_rx_buf, 0, sizeof(hid_rx_buf));
 	  //hid_read(handle, hid_rx_buf, 9);
 	  int rcv_num = RS232_Receive(hid_rx_buf, 50);
-//	if(rcv_num > 0)
-//	  printf("rcv %d data:%s\n", rcv_num, (char *)&hid_rx_buf[0]);
+	if(rcv_num > 0)
+	  printf("rcv %d data:%s\n", rcv_num, (char *)&hid_rx_buf[0]);
 	  if((hid_rx_buf[0] != 'O') || (hid_rx_buf[1] != 'K'))
 	  {
-			usleep(1000000);
+			usleep(2000000);
 			try_ask_time++;
-			if(try_ask_time > 3)
+			if(try_ask_time > 10)
 			{
 				printf("> Error, no ok receive, timeout and exit!!!\n");
 				goto exit;
