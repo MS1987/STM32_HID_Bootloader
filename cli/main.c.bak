@@ -39,7 +39,7 @@
 
 int serial_init(char *argument, uint8_t __timer);
 
-/*
+
 static int usb_write(hid_device *device, uint8_t *buffer, int len) {
   int retries = 20;
   int retval;
@@ -57,7 +57,7 @@ static int usb_write(hid_device *device, uint8_t *buffer, int len) {
   }
 
   return 1;
-}*/
+}
 
 int main(int argc, char *argv[]) {
   uint8_t page_data[SECTOR_SIZE];
