@@ -222,7 +222,7 @@ int main(int argc, char *argv[]) {
         goto exit;
       }
       n_bytes += (HID_TX_SIZE );
-      usleep(500);
+      usleep(500000);
     }
     
     printf(" %d Bytes\n", n_bytes);
