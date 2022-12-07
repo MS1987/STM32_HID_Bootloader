@@ -302,6 +302,12 @@ int set_speed(int fd, int speed)
 
    return(0);
   }
+  
+  int RS232_Receive(unsigned char *buf, unsigned int num) {
+	int n = read(fd, buf, num);
+	return n;
+	
+  }
 
 /*
   int RS232_ReadByte() {
