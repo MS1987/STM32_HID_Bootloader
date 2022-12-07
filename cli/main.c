@@ -30,7 +30,7 @@
 #include "hidapi.h"
 
 #define SECTOR_SIZE  1024
-#define HID_TX_SIZE    65
+#define HID_TX_SIZE    64
 #define HID_RX_SIZE     100
 
 #define VID           0x1209
@@ -146,7 +146,7 @@ int main(int argc, char *argv[]) {
   
   // Send RESET PAGES command to put HID bootloader in initial stage...
   memset(hid_tx_buf, 0, sizeof(hid_tx_buf)); //Fill the hid_tx_buf with zeros.
-  memcpy(&hid_tx_buf[1], CMD_RESET_PAGES, sizeof(CMD_RESET_PAGES));
+  memcpy(&hid_tx_buf[0], CMD_RESET_PAGES, sizeof(CMD_RESET_PAGES));
 
   printf("> Sending <reset pages> command...\n");
 
@@ -192,7 +192,7 @@ int main(int argc, char *argv[]) {
   while(read_bytes > 0) {
 
     for(int i = 0; i < SECTOR_SIZE; i += HID_TX_SIZE - 1) {
-      memcpy(&hid_tx_buf[1], page_data + i, HID_TX_SIZE - 1);
+      memcpy(&hid_tx_buf[0], page_data + i, HID_TX_SIZE - 1);
 
       if((i % 1024) == 0){
         printf(".");
@@ -225,7 +225,7 @@ int main(int argc, char *argv[]) {
   
   // Send CMD_REBOOT_MCU command to reboot the microcontroller...
   memset(hid_tx_buf, 0, sizeof(hid_tx_buf));
-  memcpy(&hid_tx_buf[1], CMD_REBOOT_MCU, sizeof(CMD_REBOOT_MCU));
+  memcpy(&hid_tx_buf[0], CMD_REBOOT_MCU, sizeof(CMD_REBOOT_MCU));
 
   printf("> Sending <reboot mcu> command...\n");
 
