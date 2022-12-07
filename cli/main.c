@@ -162,7 +162,7 @@ int main(int argc, char *argv[]) {
 	  memset(hid_rx_buf, 0, sizeof(hid_rx_buf));
 	  //hid_read(handle, hid_rx_buf, 9);
 	  RS232_Receive(hid_rx_buf, 3);
-	  if((hid_rx_buf[0] != 'O') || hid_rx_buf[1] != 'K'))
+	  if((hid_rx_buf[0] != 'O') || (hid_rx_buf[1] != 'K'))
 	  {
 			usleep(1000000);
 			try_ask_time++;
