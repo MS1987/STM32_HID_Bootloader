@@ -216,12 +216,12 @@ int main(int argc, char *argv[]) {
       
       // Flash is unavailable when writing to it, so USB interrupt may fail here
       //if(!usb_write(handle, hid_tx_buf, HID_TX_SIZE)) {
-	  if(RS232_SendNBytes(hid_tx_buf, HID_TX_SIZE) < HID_TX_SIZE) {
+	  if(RS232_SendNBytes(hid_tx_buf, read_bytes) < read_bytes) {
         printf("> Error while flashing firmware data.\n");
         error = 1;
         goto exit;
       }
-      n_bytes += (HID_TX_SIZE );
+      n_bytes += (read_bytes );
       usleep(500);
     }
     
