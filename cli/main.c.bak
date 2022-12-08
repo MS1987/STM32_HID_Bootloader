@@ -253,6 +253,7 @@ int main(int argc, char *argv[]) {
     
     memset(page_data, 0xff, sizeof(page_data));
     read_bytes = fread(page_data, 1, sizeof(page_data), firmware_file);
+	
   }
 
   printf("\n> Done!\n");
