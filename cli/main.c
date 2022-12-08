@@ -251,8 +251,9 @@ int main(int argc, char *argv[]) {
 	 }while(hid_rx_buf[7] != 0x02);
 	
     
-    memset(page_data, 0xff, sizeof(page_data));
-    read_bytes = fread(page_data, 1, sizeof(page_data), firmware_file);
+   /* memset(page_data, 0xff, sizeof(page_data));
+    read_bytes = fread(page_data, 1, sizeof(page_data), firmware_file);*/
+	read_bytes = 0;
   }
 
   printf("\n> Done!\n");
