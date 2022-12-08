@@ -206,13 +206,13 @@ int main(int argc, char *argv[]) {
 			usleep(500);
 		}
 		#else
-		if(n_bytes == 0)
+		/*if(n_bytes == 0)
 		{
 			printf("The first frame to send:");
 			for(int j = 0; j < sizeof(page_data); j++)
 				printf("0x%x ", page_data[j]);
 			printf("\n");
-		}
+		}*/
 		if(RS232_SendNBytes(page_data, sizeof(page_data)) < sizeof(page_data)) {
 			printf("> Error while flashing firmware data.\n");
 			error = 1;

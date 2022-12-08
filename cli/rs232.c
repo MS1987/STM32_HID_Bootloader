@@ -291,9 +291,14 @@ int set_speed(int fd, int speed)
   
   int RS232_SendNBytes(unsigned char *buf, unsigned int num) {
    int n = write(tty_fd, buf, num);
-  /* printf("Send %d num, actual send %d:\n", num, n);
-   for(int i = 0; i <  num; i++)
-	   printf("0x%x ", buf[i]);*/
+   static int debugtime = 0;
+   if(debugtime < 3)
+   {
+	   printf("Send %d num, actual send %d:\n", num, n);
+	   for(int i = 0; i <  num; i++)
+			printf("0x%x ", buf[i]);
+		debugtime++;
+   }
    if(n < num) {
      if(errno == EAGAIN) {
        return 0;
