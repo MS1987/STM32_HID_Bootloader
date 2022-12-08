@@ -206,26 +206,49 @@ int main(int argc, char *argv[]) {
   read_bytes = fread(page_data, 1, sizeof(page_data), firmware_file);
 
   while(read_bytes > 0) {
+		int left_bytes = read_bytes;
+		int sent_bytes = 0;
+		for(int i = 0; i < read_bytes; i += HID_TX_SIZE)
+		{
+			sent_bytes = left_bytes >= HID_TX_SIZE ? HID_TX_SIZE : left_bytes;
+			memcpy(&hid_tx_buf[0], page_data + i, sent_bytes );
+						
+			if(RS232_SendNBytes(hid_tx_buf, sent_bytes) < sent_bytes) {
+				printf("> Error while flashing firmware data.\n");
+				error = 1;
+				goto exit;
+			}
+			left_bytes -= sent_bytes;
+			n_bytes += HID_TX_SIZE ;
+			usleep(500);
+		}
+	  
+	  
+		#if 0  
 
-    for(int i = 0; i < SECTOR_SIZE; i += HID_TX_SIZE ) {
-      memcpy(&hid_tx_buf[0], page_data + i, HID_TX_SIZE );
+		for(int i = 0; i < SECTOR_SIZE; i += HID_TX_SIZE ) {
+			//int copy_bytes = (read_bytes - i * SECTOR_SIZE) >= SECTOR_SIZE? SECTOR_SIZE: (read_bytes - i * SECTOR_SIZE);
+			
+			memcpy(&hid_tx_buf[0], page_data + i, copy_bytes );
 
-      if((i % 1024) == 0){
-        printf(".");
-      }
-      
-      // Flash is unavailable when writing to it, so USB interrupt may fail here
-      //if(!usb_write(handle, hid_tx_buf, HID_TX_SIZE)) {
-	  if(RS232_SendNBytes(hid_tx_buf, read_bytes) < read_bytes) {
-        printf("> Error while flashing firmware data.\n");
-        error = 1;
-        goto exit;
-      }
-      n_bytes += (read_bytes );
-      usleep(500);
-    }
+			if((i % 1024) == 0){
+				printf(".");
+			}
+
+			// Flash is unavailable when writing to it, so USB interrupt may fail here
+			//if(!usb_write(handle, hid_tx_buf, HID_TX_SIZE)) {
+
+			if(RS232_SendNBytes(hid_tx_buf, HID_TX_SIZE) < HID_TX_SIZE) {
+				printf("> Error while flashing firmware data.\n");
+				error = 1;
+				goto exit;
+			}
+			n_bytes += (HID_TX_SIZE );
+			usleep(500);
+		}
+		#endif
     
-    printf(" %d Bytes\n", n_bytes);
+		printf(" %d Bytes\n", n_bytes);
 
    /* do{
       //hid_read(handle, hid_rx_buf, 9);
