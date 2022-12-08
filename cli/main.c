@@ -206,6 +206,7 @@ int main(int argc, char *argv[]) {
   read_bytes = fread(page_data, 1, sizeof(page_data), firmware_file);
 
   while(read_bytes > 0) {
+	  #if 0
 		int left_bytes = read_bytes;
 		int sent_bytes = 0;
 		for(int i = 0; i < read_bytes; i += HID_TX_SIZE)
@@ -220,16 +221,16 @@ int main(int argc, char *argv[]) {
 			}
 			left_bytes -= sent_bytes;
 			n_bytes += sent_bytes ;
-			usleep(500);
+			usleep(50);
 		}
+	  #endif
 	  
-	  
-		#if 0  
+		#if 1 
 
 		for(int i = 0; i < SECTOR_SIZE; i += HID_TX_SIZE ) {
-			//int copy_bytes = (read_bytes - i * SECTOR_SIZE) >= SECTOR_SIZE? SECTOR_SIZE: (read_bytes - i * SECTOR_SIZE);
+			memset(&hid_tx_buf[0], 0xff, HID_TX_SIZE);
 			
-			memcpy(&hid_tx_buf[0], page_data + i, copy_bytes );
+			memcpy(&hid_tx_buf[0], page_data + i, HID_TX_SIZE );
 
 			if((i % 1024) == 0){
 				printf(".");
