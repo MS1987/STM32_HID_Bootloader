@@ -219,7 +219,7 @@ int main(int argc, char *argv[]) {
 				goto exit;
 			}
 			left_bytes -= sent_bytes;
-			n_bytes += HID_TX_SIZE ;
+			n_bytes += sent_bytes ;
 			usleep(500);
 		}
 	  
