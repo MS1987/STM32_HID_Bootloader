@@ -211,7 +211,9 @@ int main(int argc, char *argv[]) {
 			error = 1;
 			goto exit;
 		}
+		n_bytes += sizeof(page_data) ;
 		#endif
+		
     
 		printf(" %d Bytes\n", n_bytes);
 
