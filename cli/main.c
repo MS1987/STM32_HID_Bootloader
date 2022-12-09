@@ -164,7 +164,7 @@ int main(int argc, char *argv[]) {
   read_bytes = fread(page_data, 1, sizeof(page_data), firmware_file);
 
 static  int debugtime = 0;
-  while(read_bytes > 0 && debugtime < 2) {
+  while(read_bytes > 0) {
 	  #if 0
 		int left_bytes = read_bytes;
 		int sent_bytes = 0;
@@ -222,7 +222,7 @@ static  int debugtime = 0;
 		n_bytes += sizeof(page_data) ;
 		#endif
 		
-    debugtime++;
+    
 		printf(" %d Bytes\n", n_bytes);
 
    /* do{
