@@ -74,6 +74,7 @@ int main(int argc, char *argv[]) {
   setbuf(stdout, NULL);
   uint8_t _timer = 0;
   uint8_t try_ask_time = 0;
+  int wait_ok_time = 2;
   
   printf("\n+-----------------------------------------------------------------------+\n");
   printf  ("|         HID-Flash v2.2.1 - STM32 HID Bootloader Flash Tool            |\n");
@@ -156,7 +157,8 @@ int main(int argc, char *argv[]) {
 				goto exit;
 			}*/
 		}
-	}while((hid_rx_buf[0] != 'O') || hid_rx_buf[1] != 'K');
+		wait_ok_time--;
+	}while((wait_ok_time > 0) || (hid_rx_buf[0] != 'O') || hid_rx_buf[1] != 'K');
 
   memset(hid_tx_buf, 0, sizeof(hid_tx_buf));
 
