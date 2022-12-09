@@ -142,7 +142,7 @@ int main(int argc, char *argv[]) {
 		
 		if((hid_rx_buf[0] != 'O') || (hid_rx_buf[1] != 'K'))
 		{
-			usleep(2000000);
+			usleep(1000000);
 			try_ask_time++;
 			if(try_ask_time > 10)
 			{
