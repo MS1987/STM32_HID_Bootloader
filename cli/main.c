@@ -132,27 +132,30 @@ int main(int argc, char *argv[]) {
 }*/
   
   do{
-	  memset(hid_rx_buf, 0, sizeof(hid_rx_buf));
-	  //hid_read(handle, hid_rx_buf, 9);
-	  int rcv_num = RS232_Receive(hid_rx_buf, 50);
-	if(rcv_num > 0)
-	  printf("rcv %d data:%s\n", rcv_num, (char *)&hid_rx_buf[0]);
-	  if((hid_rx_buf[0] != 'O') || (hid_rx_buf[1] != 'K'))
-	  {
+		memset(hid_rx_buf, 0, sizeof(hid_rx_buf));
+		//hid_read(handle, hid_rx_buf, 9);
+		usleep(2000000);
+		int rcv_num = RS232_Receive(hid_rx_buf, 50);
+		
+		if(rcv_num > 0)
+			printf("rcv %d data:%s\n", rcv_num, (char *)&hid_rx_buf[0]);
+		
+		if((hid_rx_buf[0] != 'O') || (hid_rx_buf[1] != 'K'))
+		{
 			usleep(2000000);
 			try_ask_time++;
-			if(try_ask_time > 10)
+			if(try_ask_time > 3)
 			{
 				printf("> Error, no ok receive, timeout and exit!!!\n");
 				goto exit;
 			}
-			printf("> No ok receive, send %d times...\n", try_ask_time);
+		/*	printf("> No ok receive, send %d times...\n", try_ask_time);
 			if(RS232_SendNBytes(hid_tx_buf, HID_TX_SIZE) < HID_TX_SIZE) {
 				printf("> Error while sending <reset pages> command.\n");
 				error = 1;
 				goto exit;
-			 }
-	  }
+			}*/
+		}
 	}while((hid_rx_buf[0] != 'O') || hid_rx_buf[1] != 'K');
 
   memset(hid_tx_buf, 0, sizeof(hid_tx_buf));
