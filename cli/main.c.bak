@@ -125,7 +125,7 @@ int main(int argc, char *argv[]) {
 		{
 			printf("rcv %d data:%s\n", rcv_num, (char *)&hid_rx_buf[0]);
 			for(int ind = 0; ind < rcv_num; ind++)
-				printf("0x%x ");
+				printf("0x%x ", hid_rx_buf[ind]);
 			printf("\n");
 		}	
 		usleep(50);
