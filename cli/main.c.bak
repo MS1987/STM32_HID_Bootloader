@@ -118,7 +118,7 @@ int main(int argc, char *argv[]) {
     goto exit;
   }
 
-  for(wait_ok_time = 0; wait_ok_time < 1; wait_ok_time++)
+  for(wait_ok_time = 0; wait_ok_time < 2; wait_ok_time++)
   {
 	  do{
 			memset(hid_rx_buf, 0, sizeof(hid_rx_buf));
