@@ -117,6 +117,14 @@ int main(int argc, char *argv[]) {
     error = 1;
     goto exit;
   }
+  whlile(1)
+  {
+		int rcv_num = RS232_Receive(hid_rx_buf, 10);
+			
+		if(rcv_num > 0)
+			printf("rcv %d data:%s\n", rcv_num, (char *)&hid_rx_buf[0]);
+		usleep(50);
+  }
 
   for(wait_ok_time = 0; wait_ok_time < 2; wait_ok_time++)
   {
