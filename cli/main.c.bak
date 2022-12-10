@@ -119,10 +119,15 @@ int main(int argc, char *argv[]) {
   }
   while(1)
   {
-		int rcv_num = RS232_Receive(hid_rx_buf, 10);
+		int rcv_num = RS232_Receive(hid_rx_buf, 100);
 			
 		if(rcv_num > 0)
+		{
 			printf("rcv %d data:%s\n", rcv_num, (char *)&hid_rx_buf[0]);
+			for(int ind = 0; ind < rcv_num; ind++)
+				printf("0x%x ");
+			printf("\n");
+		}	
 		usleep(50);
   }
 
