@@ -124,7 +124,7 @@ int main(int argc, char *argv[]) {
 			memset(hid_rx_buf, 0, sizeof(hid_rx_buf));
 			//hid_read(handle, hid_rx_buf, 9);
 			usleep(2000);
-			int rcv_num = RS232_Receive(hid_rx_buf, 50);
+			int rcv_num = RS232_Receive(hid_rx_buf, 2);
 			
 			if(rcv_num > 0)
 				printf("rcv %d data:%s\n", rcv_num, (char *)&hid_rx_buf[0]);
