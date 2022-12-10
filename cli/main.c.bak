@@ -119,7 +119,7 @@ int main(int argc, char *argv[]) {
   }
   whlile(1)
   {
-		int rcv_num = RS232_Receive(hid_rx_buf, 2);
+		int rcv_num = RS232_Receive(hid_rx_buf, 10);
 			
 		if(rcv_num > 0)
 			printf("rcv %d data:%s\n", rcv_num, (char *)&hid_rx_buf[0]);
