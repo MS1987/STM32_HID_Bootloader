@@ -117,7 +117,7 @@ int main(int argc, char *argv[]) {
     error = 1;
     goto exit;
   }
-  while(1)
+  /*while(1)
   {
 		int rcv_num = RS232_Receive(hid_rx_buf, 100);
 			
@@ -129,7 +129,7 @@ int main(int argc, char *argv[]) {
 			printf("\n");
 		}	
 		usleep(50);
-  }
+  }*/
 
   for(wait_ok_time = 0; wait_ok_time < 2; wait_ok_time++)
   {

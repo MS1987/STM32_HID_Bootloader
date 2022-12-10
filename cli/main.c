@@ -246,14 +246,14 @@ static  int debugtime = 0;
   printf("\n> Done!\n");
   
   // Send CMD_REBOOT_MCU command to reboot the microcontroller...
-  memset(hid_tx_buf, 0, sizeof(hid_tx_buf));
-  memcpy(&hid_tx_buf[0], CMD_REBOOT_MCU, sizeof(CMD_REBOOT_MCU));
+  memset(page_data, 0, sizeof(page_data));
+  memcpy(&page_data[0], CMD_REBOOT_MCU, sizeof(CMD_REBOOT_MCU));
 
   printf("> Sending <reboot mcu> command...\n");
 
   // Flash is unavailable when writing to it, so USB interrupt may fail here
   //if(!usb_write(handle, hid_tx_buf, HID_TX_SIZE)) {
-  if(RS232_SendNBytes(hid_tx_buf, HID_TX_SIZE) < HID_TX_SIZE) {
+  if(RS232_SendNBytes(page_data, sizeof(page_data)) < sizeof(page_data)) {
     printf("> Error while sending <reboot mcu> command.\n");
   }
   
