@@ -74,7 +74,7 @@ int main(int argc, char *argv[]) {
   setbuf(stdout, NULL);
   uint8_t _timer = 0;
   uint8_t try_ask_time = 0;
-  int wait_ok_time = 2;
+  int wait_ok_time = 0;
   
   printf("\n+-----------------------------------------------------------------------+\n");
   printf  ("|         HID-Flash v2.2.1 - STM32 HID Bootloader Flash Tool            |\n");
@@ -118,53 +118,32 @@ int main(int argc, char *argv[]) {
     goto exit;
   }
 
-  
-  do{
-		memset(hid_rx_buf, 0, sizeof(hid_rx_buf));
-		//hid_read(handle, hid_rx_buf, 9);
-		usleep(2000000);
-		int rcv_num = RS232_Receive(hid_rx_buf, 50);
-		
-		if(rcv_num > 0)
-			printf("rcv %d data:%s\n", rcv_num, (char *)&hid_rx_buf[0]);
-		
-		if((hid_rx_buf[0] != 'O') || (hid_rx_buf[1] != 'K'))
-		{
+  for(wait_ok_time = 0; wait_ok_time < 2; wait_ok_time++)
+  {
+	  do{
+			memset(hid_rx_buf, 0, sizeof(hid_rx_buf));
+			//hid_read(handle, hid_rx_buf, 9);
 			usleep(2000000);
-			try_ask_time++;
-			if(try_ask_time > 3)
+			int rcv_num = RS232_Receive(hid_rx_buf, 50);
+			
+			if(rcv_num > 0)
+				printf("rcv %d data:%s\n", rcv_num, (char *)&hid_rx_buf[0]);
+			
+			if((hid_rx_buf[0] != 'O') || (hid_rx_buf[1] != 'K'))
 			{
-				printf("> Error, no ok receive, timeout and exit!!!\n");
-				goto exit;
-			}
+				usleep(2000000);
+				try_ask_time++;
+				if(try_ask_time > 3)
+				{
+					printf("> Error, no ok receive, timeout and exit!!!\n");
+					goto exit;
+				}
+			
+			}		
+			
+		}while((hid_rx_buf[0] != 'O') || hid_rx_buf[1] != 'K');
+  }	
 		
-		}		
-		
-	}while((hid_rx_buf[0] != 'O') || hid_rx_buf[1] != 'K');
-	
-	do{
-		memset(hid_rx_buf, 0, sizeof(hid_rx_buf));
-		//hid_read(handle, hid_rx_buf, 9);
-		usleep(2000000);
-		int rcv_num = RS232_Receive(hid_rx_buf, 50);
-		
-		if(rcv_num > 0)
-			printf("rcv %d data:%s\n", rcv_num, (char *)&hid_rx_buf[0]);
-		
-		if((hid_rx_buf[0] != 'O') || (hid_rx_buf[1] != 'K'))
-		{
-			usleep(2000000);
-			try_ask_time++;
-			if(try_ask_time > 3)
-			{
-				printf("> Error, no ok receive, timeout and exit!!!\n");
-				goto exit;
-			}
-		
-		}
-		
-		
-	}while((hid_rx_buf[0] != 'O') || hid_rx_buf[1] != 'K');
 
   memset(hid_tx_buf, 0, sizeof(hid_tx_buf));
 
