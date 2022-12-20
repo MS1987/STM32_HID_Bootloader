@@ -117,23 +117,11 @@ int main(int argc, char *argv[]) {
     error = 1;
     goto exit;
   }
-  /*while(1)
-  {
-		int rcv_num = RS232_Receive(hid_rx_buf, 100);
-			
-		if(rcv_num > 0)
-		{
-			printf("rcv %d data:%s\n", rcv_num, (char *)&hid_rx_buf[0]);
-			for(int ind = 0; ind < rcv_num; ind++)
-				printf("0x%x ", hid_rx_buf[ind]);
-			printf("\n");
-		}	
-		usleep(50);
-  }*/
+  
 
-  for(wait_ok_time = 0; wait_ok_time < 2; wait_ok_time++)
-  {
-	  do{
+	for(wait_ok_time = 0; wait_ok_time < 2; wait_ok_time++)
+	{
+		do{
 			memset(hid_rx_buf, 0, sizeof(hid_rx_buf));
 			//hid_read(handle, hid_rx_buf, 9);
 			usleep(2000);
@@ -151,62 +139,37 @@ int main(int argc, char *argv[]) {
 					printf("> Error, no ok receive, timeout and exit!!!\n");
 					goto exit;
 				}
+				if(wait_ok_time == 0)
+					if(RS232_SendNBytes(hid_tx_buf, HID_TX_SIZE)<=HID_TX_SIZE) {
+						printf("> Error while sending <reset pages> command.\n");
+						error = 1;
+						goto exit;
+					 }
 			
 			}		
 			
 		}while((hid_rx_buf[0] != 'O') || hid_rx_buf[1] != 'K');
-  }	
+	}	
 		
 
-  memset(hid_tx_buf, 0, sizeof(hid_tx_buf));
+	memset(hid_tx_buf, 0, sizeof(hid_tx_buf));
 
-  // Send Firmware File data
-  printf("> Flashing firmware...\n");
+	// Send Firmware File data
+	printf("> Flashing firmware...\n");
 
-  memset(page_data, 0, sizeof(page_data));
-  read_bytes = fread(page_data, 1, sizeof(page_data), firmware_file);
+	memset(page_data, 0, sizeof(page_data));
+	read_bytes = fread(page_data, 1, sizeof(page_data), firmware_file);
 
-static  int debugtime = 0;
-  while(read_bytes > 0) {
-	 
+	static  int debugtime = 0;
+	while(read_bytes > 0) {	 
 	  
-		#if 0 
-
-		for(int i = 0; i < SECTOR_SIZE; i += HID_TX_SIZE ) {
-			memset(&hid_tx_buf[0], 0xff, HID_TX_SIZE);
-			
-			memcpy(&hid_tx_buf[0], page_data + i, HID_TX_SIZE );
-
-			if((i % 1024) == 0){
-				printf(".");
-			}
-
-			// Flash is unavailable when writing to it, so USB interrupt may fail here
-			//if(!usb_write(handle, hid_tx_buf, HID_TX_SIZE)) {
-
-			if(RS232_SendNBytes(hid_tx_buf, HID_TX_SIZE) < HID_TX_SIZE) {
-				printf("> Error while flashing firmware data.\n");
-				error = 1;
-				goto exit;
-			}
-			n_bytes += (HID_TX_SIZE );
-			usleep(500);
-		}
-		#else
-		/*if(n_bytes == 0)
-		{
-			printf("The first frame to send:");
-			for(int j = 0; j < sizeof(page_data); j++)
-				printf("0x%x ", page_data[j]);
-			printf("\n");
-		}*/
 		if(RS232_SendNBytes(page_data, sizeof(page_data)) < sizeof(page_data)) {
 			printf("> Error while flashing firmware data.\n");
 			error = 1;
 			goto exit;
 		}
 		n_bytes += sizeof(page_data) ;
-		#endif
+		
 		
     
 		printf(" %d Bytes\n", n_bytes);

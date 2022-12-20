@@ -140,7 +140,7 @@ int main(int argc, char *argv[]) {
 					goto exit;
 				}
 				if(wait_ok_time == 0)
-					if(RS232_SendNBytes(hid_tx_buf, HID_TX_SIZE)<=HID_TX_SIZE) {
+					if(RS232_SendNBytes(hid_tx_buf, HID_TX_SIZE) < HID_TX_SIZE) {
 						printf("> Error while sending <reset pages> command.\n");
 						error = 1;
 						goto exit;
